@@ -2,8 +2,17 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { useDispatch } from "react-redux";
+import {useTypedSelector} from '../hooks/useTypedSelector'
+import {setCount} from '../store/axtions/user'
 
 const Home: NextPage = () => {
+  const dispatch = useDispatch()
+  const user = useTypedSelector((state) => state.user);
+
+  const addCount = () => {
+    dispatch(setCount(user.count + 1))
+  }
   return (
     <div className={styles.container}>
       <Head>
@@ -14,9 +23,9 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome to {user.name} {user.count}  <a href="https://nextjs.org">Next.js!</a>
         </h1>
-
+        <button onClick={addCount}>click</button>
         <p className={styles.description}>
           Get started by editing{' '}
           <code className={styles.code}>pages/index.tsx</code>
