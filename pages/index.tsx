@@ -1,11 +1,10 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import Image from 'next/image';
+import styles from '../styles/Home.module.scss';
 import { useDispatch } from "react-redux";
 import { useAppSelector } from '../hooks/redux'
 import { userSlice } from '../store/reducers/user'
-
 
 const Home: NextPage = () => {
   const dispatch = useDispatch()
@@ -46,16 +45,14 @@ const Home: NextPage = () => {
 
           <a
             href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
+            className={styles.card}>
             <h2>Examples &rarr;</h2>
             <p>Discover and deploy boilerplate example Next.js projects.</p>
           </a>
 
           <a
             href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
+            className={styles.card}>
             <h2>Deploy &rarr;</h2>
             <p>
               Instantly deploy your Next.js site to a public URL with Vercel.
@@ -68,8 +65,7 @@ const Home: NextPage = () => {
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
           target="_blank"
-          rel="noopener noreferrer"
-        >
+          rel="noopener noreferrer">
           Powered by{' '}
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
@@ -77,7 +73,7 @@ const Home: NextPage = () => {
         </a>
       </footer>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
