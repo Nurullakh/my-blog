@@ -1,17 +1,19 @@
-import { UserState, UserAction } from './types'
+import { UserState } from './types'
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: UserState = {
   name: 'Jone',
   count: 0
 }
 
-const reducer = (state = initialState, action: UserAction) => {
-  switch (action.type) {
-    case 'SET_COUNT':
-      return { ...state, count: action.payload }
-    default:
-      return state
-  }
-}
+export const userSlice = createSlice({
+  name: 'user',
+  initialState,
+  reducers: {
+    setCount(state, action: PayloadAction<number>) {
+      state.count = action.payload
+    },
+  },
+})
 
-export default reducer
+export default userSlice.reducer;

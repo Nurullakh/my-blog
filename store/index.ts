@@ -1,16 +1,16 @@
-import { createStore, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-import { composeWithDevTools } from "redux-devtools-extension";
-import { createWrapper } from "next-redux-wrapper";
-import rootReducer from "./reducers";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import userReducer from './reducers/user'
 
-export const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(thunk))
-);
+const rootReducer = combineReducers({
+  userReducer,
+})
 
-export type RootState = ReturnType<typeof store.getState>
+export const setupStore = () => {
+  return configureStore({
+    reducer: rootReducer
+  })
+}
 
-const makeStore = () => store;
-
-export const wrapper = createWrapper(makeStore);
+export type RootState = ReturnType<typeof rootReducer>
+export type AppStore = ReturnType<typeof setupStore>
+export type AppDispatch = AppStore['dispatch']

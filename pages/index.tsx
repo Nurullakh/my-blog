@@ -3,12 +3,14 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useDispatch } from "react-redux";
-import {useTypedSelector} from '../hooks/useTypedSelector'
-import {setCount} from '../store/axtions/user'
+import { useAppSelector } from '../hooks/redux'
+import { userSlice } from '../store/reducers/user'
+
 
 const Home: NextPage = () => {
   const dispatch = useDispatch()
-  const user = useTypedSelector((state) => state.user);
+  const { setCount } = userSlice.actions
+  const user = useAppSelector((state) => state.userReducer);
 
   const addCount = () => {
     dispatch(setCount(user.count + 1))
