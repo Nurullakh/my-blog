@@ -11,11 +11,7 @@ import {
   Typography,
   Container,
 } from "@mui/material";
-interface IFormData {
-  name: string;
-  email: string;
-  password: string;
-}
+import {IFormData} from '../types/signup'
 
 export default function SignUp() {
   const router = useRouter();
