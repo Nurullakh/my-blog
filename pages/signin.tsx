@@ -11,10 +11,11 @@ import {
   Typography,
   Container,
 } from "@mui/material";
-import {IFormData} from '../types/signup'
+import {IFormData} from '../types/signin'
 
-export default function SignUp() {
+export default function SignIn() {
   const router = useRouter();
+  const [error, setError] = React.useState(false)
   const {
     register,
     handleSubmit,
@@ -22,8 +23,11 @@ export default function SignUp() {
   } = useForm<IFormData>();
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
-    router.push("/");
+    if (data.name === 'user' && data.password === '123456') {
+      router.push("/");
+    } else {
+      setError(true)
+    }
   });
 
   return (
@@ -39,7 +43,7 @@ export default function SignUp() {
           }}
         >
           <Typography component="h1" variant="h5">
-            Sign up
+            Sign in
           </Typography>
           <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -56,17 +60,6 @@ export default function SignUp() {
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  type="email"
-                  label="Email"
-                  autoComplete="email"
-                  color="success"
-                  error={!!errors.email}
-                  {...register("email", { required: true, pattern: /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/ })}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
                   label="Password"
                   type="password"
                   autoComplete="new-password"
@@ -76,6 +69,7 @@ export default function SignUp() {
                 />
               </Grid>
             </Grid>
+            {error && <div className={style.error}>Некорректные данные</div>}
             <Button
               type="submit"
               fullWidth
@@ -87,7 +81,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/signin">already have an account? Sign in</Link>
+                <Link href="/signup">Don&apos;t have an account? Sign Up</Link>
               </Grid>
             </Grid>
           </Box>
