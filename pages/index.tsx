@@ -26,7 +26,7 @@ const Home: NextPage = () => {
             variant="h2">
             Latest
           </Typography>
-          <Box component="form" noValidate sx={{ mt: 3 }}>
+          <Box sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Post
