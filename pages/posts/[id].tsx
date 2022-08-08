@@ -1,8 +1,13 @@
 import Head from 'next/head';
 
+import { useRouter } from 'next/router';
+
 import { Grid, Box, Typography, Container } from '@mui/material';
 
 function Post() {
+  const router = useRouter();
+  const { id } = router.query;
+
   return (
     <>
       <Head>
@@ -22,6 +27,8 @@ function Post() {
             }}
             component="h1"
             variant="h4">
+            Post ID: {id}
+            <br />
             15 Disadvantages Of Freedom And How You Can Workaround It.
           </Typography>
           <Box sx={{ mt: 3, color: '#fff' }}>
