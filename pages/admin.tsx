@@ -19,7 +19,7 @@ export default function CreatePost() {
     formState: { errors },
   } = useForm<IPostData>();
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit(() => {
     setSuccess(true);
   });
 
@@ -75,14 +75,25 @@ export default function CreatePost() {
                 </Grid>
               )}
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="success"
-              sx={{ mt: 3, mb: 2 }}>
-              Create post
-            </Button>
+            {success ? (
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="success"
+                sx={{ mt: 3, mb: 2 }}>
+                Post created!
+              </Button>
+            ) : (
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                sx={{ mt: 3, mb: 2 }}>
+                Create post
+              </Button>
+            )}
           </Box>
         </Box>
       </Container>
