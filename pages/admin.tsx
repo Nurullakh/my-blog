@@ -23,9 +23,13 @@ export default function CreatePost() {
     setSuccess(true);
   });
 
+  function onPostChange() {
+    setSuccess(false);
+  }
+
   return (
     <>
-      <Container component="main" maxWidth="xl">
+      <Container component="main" maxWidth="lg">
         <Box
           sx={{
             marginTop: 8,
@@ -47,16 +51,19 @@ export default function CreatePost() {
               <Grid item xs={12}>
                 <TextField
                   fullWidth
+                  required
                   label="Title"
                   color="success"
                   error={!!errors.title}
                   {...register('title', { required: true })}
+                  onChange={success ? onPostChange : () => {}}
                 />
               </Grid>
               <Grid item xs={12} sx={{ mb: 5 }}>
                 <TextField
                   multiline
                   fullWidth
+                  required
                   rows={8}
                   label="Post"
                   type="post"
@@ -64,6 +71,7 @@ export default function CreatePost() {
                   color="success"
                   error={!!errors.post}
                   {...register('post', { required: true })}
+                  onChange={success ? onPostChange : () => {}}
                 />
               </Grid>
               {success && (
