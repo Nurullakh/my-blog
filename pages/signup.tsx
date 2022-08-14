@@ -1,4 +1,7 @@
 import * as React from "react";
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
+import { fetchSignUp } from '../store/reducers/user/ActionUser';
+import { IFormData } from "../store/reducers/user/types";
 import style from "../styles/auth.module.scss";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
@@ -11,10 +14,19 @@ import {
   Typography,
   Container,
 } from "@mui/material";
-import {IFormData} from '../types/signup'
 
 export default function SignUp() {
   const router = useRouter();
+
+  const dispatch = useAppDispatch();
+  const {status} = useAppSelector(state => state.user)
+
+  React.useEffect(() => {
+    if (status === 'success') {
+      router.push("/");
+    }
+  }, [status])
+
   const {
     register,
     handleSubmit,
@@ -22,8 +34,7 @@ export default function SignUp() {
   } = useForm<IFormData>();
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
-    router.push("/");
+    dispatch(fetchSignUp(data))
   });
 
   return (
