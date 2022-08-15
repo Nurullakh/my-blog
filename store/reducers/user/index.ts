@@ -3,10 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import {fetchSignUp} from "./ActionUser";
 
 const initialState: IUserState = {
-  email: null,
-  idToken: null,
-  refreshToken: null,
-  status: null,
+  email: '',
+  idToken: '',
+  refreshToken: '',
+  status: '',
 }
 
 export const userSlice = createSlice({
@@ -15,7 +15,6 @@ export const userSlice = createSlice({
   reducers: {},
   extraReducers: {
     [fetchSignUp.fulfilled.type]: (state, action) => {
-      console.log(action)
       state.email = action.payload.email;
       state.idToken = action.payload.idToken;
       state.refreshToken = action.payload.refreshToken;

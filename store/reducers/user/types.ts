@@ -1,8 +1,8 @@
 export interface IUserState {
-  email: string | null;
-  idToken: string | null;
-  refreshToken: string | null;
-  status: string | null,
+  email: string;
+  idToken: string;
+  refreshToken: string;
+  status: string,
 }
 
 export interface IFormData {
