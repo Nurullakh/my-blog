@@ -1,5 +1,8 @@
 import axios from 'axios';
-// Пока у нас нет своего апи, используем это
+
 export default axios.create({
-  baseURL: `http://jsonplaceholder.typicode.com/`
+  baseURL: `https://identitytoolkit.googleapis.com/v1/`,
+  params: {
+    key: 'AIzaSyAOKhUoCqv2R9j20bV92xw1uZmh7LpaJOA'
+  }
 });

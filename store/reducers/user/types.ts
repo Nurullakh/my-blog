@@ -1,4 +1,18 @@
-export interface UserState {
+export interface IUserState {
+  email: string;
+  idToken: string;
+  refreshToken: string;
+  status: string,
+}
+
+export interface IFormData {
   name: string;
-  count: number
+  email: string;
+  password: string;
+}
+
+export enum Status {
+  Success = 'success',
+  Loading = 'loading',
+  Error = 'error'
 }

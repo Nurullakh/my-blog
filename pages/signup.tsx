@@ -1,4 +1,8 @@
 import * as React from "react";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../hooks/redux";
+import { fetchSignUp } from "../store/reducers/user/ActionUser";
+import { IFormData } from "../store/reducers/user/types";
 import style from "../styles/auth.module.scss";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
@@ -11,10 +15,19 @@ import {
   Typography,
   Container,
 } from "@mui/material";
-import {IFormData} from '../types/signup'
 
 export default function SignUp() {
   const router = useRouter();
+
+  const dispatch = useDispatch();
+  const { status } = useAppSelector((state) => state.user);
+
+  React.useEffect(() => {
+    if (status === "success") {
+      router.push("/");
+    }
+  }, [status]);
+
   const {
     register,
     handleSubmit,
@@ -22,8 +35,7 @@ export default function SignUp() {
   } = useForm<IFormData>();
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
-    router.push("/");
+    dispatch(fetchSignUp(data));
   });
 
   return (
@@ -50,7 +62,7 @@ export default function SignUp() {
                   label="Name"
                   color="success"
                   error={!!errors.name}
-                  {...register("name", { required: true , minLength: 2})}
+                  {...register("name", { required: true, minLength: 2 })}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -61,7 +73,11 @@ export default function SignUp() {
                   autoComplete="email"
                   color="success"
                   error={!!errors.email}
-                  {...register("email", { required: true, pattern: /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/ })}
+                  {...register("email", {
+                    required: true,
+                    pattern:
+                      /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/,
+                  })}
                 />
               </Grid>
               <Grid item xs={12}>
