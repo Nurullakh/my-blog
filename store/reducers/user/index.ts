@@ -1,12 +1,13 @@
 import { IUserState, Status } from './types'
 import { createSlice } from "@reduxjs/toolkit";
-import {fetchSignUp} from "./ActionUser";
+import {fetchSignUp, fetchSignIn} from "./ActionUser";
 
 const initialState: IUserState = {
   email: '',
   idToken: '',
   refreshToken: '',
   status: '',
+  statusSignIn: '',
 }
 
 export const userSlice = createSlice({
@@ -25,6 +26,19 @@ export const userSlice = createSlice({
     },
     [fetchSignUp.rejected.type]: (state) => {
       state.status = Status.Error
+    },
+
+    [fetchSignIn.fulfilled.type]: (state, action) => {
+      state.email = action.payload.email;
+      state.idToken = action.payload.idToken;
+      state.refreshToken = action.payload.refreshToken;
+      state.statusSignIn = Status.Success;
+    },
+    [fetchSignIn.pending.type]: (state) => {
+      state.statusSignIn = Status.Loading
+    },
+    [fetchSignIn.rejected.type]: (state) => {
+      state.statusSignIn = Status.Error
     },
   }
 })

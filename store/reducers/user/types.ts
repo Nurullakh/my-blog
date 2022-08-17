@@ -3,6 +3,7 @@ export interface IUserState {
   idToken: string;
   refreshToken: string;
   status: string,
+  statusSignIn: string
 }
 
 export interface IFormData {

@@ -1,4 +1,7 @@
 import * as React from "react";
+import { useAppSelector, useAppDispatch } from "../hooks/redux";
+import { fetchSignIn } from "../store/reducers/user/ActionUser";
+import {IFormData} from '../types/signin'
 import style from "../styles/auth.module.scss";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
@@ -11,11 +14,19 @@ import {
   Typography,
   Container,
 } from "@mui/material";
-import {IFormData} from '../types/signin'
 
 export default function SignIn() {
   const router = useRouter();
-  const [error, setError] = React.useState(false)
+
+  const dispatch = useAppDispatch();
+  const { statusSignIn } = useAppSelector((state) => state.user);
+
+  React.useEffect(() => {
+    if (statusSignIn === "success") {
+      router.push("/");
+    }
+  }, [statusSignIn]);
+
   const {
     register,
     handleSubmit,
@@ -23,11 +34,7 @@ export default function SignIn() {
   } = useForm<IFormData>();
 
   const onSubmit = handleSubmit((data) => {
-    if (data.name === 'user' && data.password === '123456') {
-      router.push("/");
-    } else {
-      setError(true)
-    }
+    dispatch(fetchSignIn(data));
   });
 
   return (
@@ -49,12 +56,16 @@ export default function SignIn() {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
-                  autoComplete="given-name"
+                  autoComplete="given-email"
                   fullWidth
-                  label="Name"
+                  label="Email"
                   color="success"
-                  error={!!errors.name}
-                  {...register("name", { required: true , minLength: 2})}
+                  error={!!errors.email}
+                  {...register("email", {
+                    required: true,
+                    pattern:
+                      /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/,
+                  })}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -69,7 +80,7 @@ export default function SignIn() {
                 />
               </Grid>
             </Grid>
-            {error && <div className={style.error}>Некорректные данные</div>}
+            {statusSignIn === 'error' && <div className={style.error}>Некорректные данные</div>}
             <Button
               type="submit"
               fullWidth

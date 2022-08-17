@@ -1,6 +1,5 @@
 import * as React from "react";
-import { useDispatch } from "react-redux";
-import { useAppSelector } from "../hooks/redux";
+import { useAppSelector, useAppDispatch } from "../hooks/redux";
 import { fetchSignUp } from "../store/reducers/user/ActionUser";
 import { IFormData } from "../store/reducers/user/types";
 import style from "../styles/auth.module.scss";
@@ -19,7 +18,7 @@ import {
 export default function SignUp() {
   const router = useRouter();
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { status } = useAppSelector((state) => state.user);
 
   React.useEffect(() => {
