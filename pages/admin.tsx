@@ -1,5 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useAppDispatch } from '../hooks/redux';
+import { fetchCreatePost } from '../store/reducers/post/ActionPost';
 import {
   Alert,
   Button,
@@ -12,14 +14,18 @@ import {
 import { IPostData } from '../types/createPost';
 
 export default function CreatePost() {
+  const dispatch = useAppDispatch();
+
   const [success, setSuccess] = React.useState(false);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IPostData>();
 
-  const onSubmit = handleSubmit(() => {
+  const onSubmit = handleSubmit((data) => {
+    dispatch(fetchCreatePost(data));
     setSuccess(true);
   });
 
