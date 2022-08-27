@@ -1,5 +1,9 @@
 import React from 'react';
+
 import { useForm } from 'react-hook-form';
+
+import axios from 'axios';
+
 import {
   Alert,
   Button,
@@ -13,14 +17,24 @@ import { IPostData } from '../types/createPost';
 
 export default function CreatePost() {
   const [success, setSuccess] = React.useState(false);
+  const [error, setError] = React.useState(false);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IPostData>();
 
-  const onSubmit = handleSubmit(() => {
-    setSuccess(true);
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      await axios.post(
+        'https://ny-blog1-default-rtdb.europe-west1.firebasedatabase.app/posts.json',
+        data
+      );
+      setSuccess(true);
+    } catch (e) {
+      setError(true);
+    }
   });
 
   function onPostChange() {
@@ -79,6 +93,13 @@ export default function CreatePost() {
                   <Alert severity="success">
                     Your post has been successfully created! Within a few
                     minutes you can see it on the main page ;)
+                  </Alert>
+                </Grid>
+              )}
+              {error && (
+                <Grid item xs={12}>
+                  <Alert severity="error">
+                    Something went wrong :( Please try again later
                   </Alert>
                 </Grid>
               )}
