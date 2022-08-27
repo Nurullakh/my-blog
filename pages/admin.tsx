@@ -17,6 +17,7 @@ import { IPostData } from '../types/createPost';
 
 export default function CreatePost() {
   const [success, setSuccess] = React.useState(false);
+  const [error, setError] = React.useState(false);
 
   const {
     register,
@@ -32,7 +33,7 @@ export default function CreatePost() {
       );
       setSuccess(true);
     } catch (e) {
-      setSuccess(false);
+      setError(true);
     }
   });
 
@@ -92,6 +93,13 @@ export default function CreatePost() {
                   <Alert severity="success">
                     Your post has been successfully created! Within a few
                     minutes you can see it on the main page ;)
+                  </Alert>
+                </Grid>
+              )}
+              {error && (
+                <Grid item xs={12}>
+                  <Alert severity="error">
+                    Something went wrong :( Please try again later
                   </Alert>
                 </Grid>
               )}
