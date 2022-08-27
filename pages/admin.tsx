@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from '../hooks/redux';
-import { fetchCreatePost } from '../store/reducers/post/ActionPost';
+
+import axios from 'axios';
+
 import {
   Alert,
   Button,
@@ -14,8 +16,6 @@ import {
 import { IPostData } from '../types/createPost';
 
 export default function CreatePost() {
-  const dispatch = useAppDispatch();
-
   const [success, setSuccess] = React.useState(false);
 
   const {
@@ -24,9 +24,16 @@ export default function CreatePost() {
     formState: { errors },
   } = useForm<IPostData>();
 
-  const onSubmit = handleSubmit((data) => {
-    dispatch(fetchCreatePost(data));
-    setSuccess(true);
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      await axios.post(
+        'https://ny-blog1-default-rtdb.europe-west1.firebasedatabase.app/posts.json',
+        data
+      );
+      setSuccess(true);
+    } catch (e) {
+      setSuccess(false);
+    }
   });
 
   function onPostChange() {
